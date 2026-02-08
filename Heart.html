@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Tracked Particles</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: #000; font-family: sans-serif; }
+        #info { position: absolute; top: 10px; left: 10px; color: white; pointer-events: none; z-index: 10; }
+        canvas { display: block; }
+        video { transform: scaleX(-1); position: absolute; bottom: 10px; right: 10px; width: 160px; border: 2px solid #444; }
+    </style>
+</head>
+<body>
+    <div id="info">
+        Show 0-4 fingers to change shape<br>
+        Pinch thumb & index to expand/contract
+    </div>
+    <video id="webcam" autoplay playsinline></video>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { Hands } from "https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js";
+
+        // --- Configuration ---
+        const PARTICLE_COUNT = 15000;
+        let currentShape = 0;
+        let expansionValue = 1.0;
+        let hueValue = 0.5;
+
+        // --- Three.js Setup ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // --- Custom Shader Material ---
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                uTime: { value: 0 },
+                uExpansion: { value: 1.0 },
+                uShape: { value: 0 },
+                uColor: { value: new THREE.Color(1, 1, 1) }
+            },
+            vertexShader: `
+                uniform float uTime;
+                uniform float uExpansion;
+                uniform int uShape;
+                attribute vec3 pos0; // Random/Explosion
+                attribute vec3 pos1; // Heart
+                attribute vec3 pos2; // Flower
+                attribute vec3 pos3; // Saturn
+                attribute vec3 pos4; // Spiral
+                varying vec3 vColor;
+
+                void main() {
+                    vec3 target;
+                    if(uShape == 0) target = pos0;
+                    else if(uShape == 1) target = pos1;
+                    else if(uShape == 2) target = pos2;
+                    else if(uShape == 3) target = pos3;
+                    else target = pos4;
+
+                    vec3 morphed = target * uExpansion;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(morphed, 1.0);
+                    gl_PointSize = 2.5;
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 uColor;
+                void main() {
+                    float dist = distance(gl_PointCoord, vec2(0.5));
+                    if(dist > 0.5) discard;
+                    gl_FragColor = vec4(uColor, 1.0 - dist * 2.0);
+                }
+            `,
+            transparent: true,
+            depthTest: false
+        });
+
+        // --- Generate Shapes ---
+        const geometry = new THREE.BufferGeometry();
+        const positions = { 0:[], 1:[], 2:[], 3:[], 4:[] };
+
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            // Shape 0: Sphere/Explosion
+            const v0 = new THREE.Vector3().setFromSphericalCoords(2, Math.random() * Math.PI, Math.random() * Math.PI * 2);
+            positions[0].push(v0.x, v0.y, v0.z);
+
+            // Shape 1: Heart
+            const t = Math.random() * Math.PI * 2;
+            const x1 = 0.15 * (16 * Math.pow(Math.sin(t), 3));
+            const y1 = 0.15 * (13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+            positions[1].push(x1, y1, (Math.random()-0.5)*0.5);
+
+            // Shape 2: Flower (Rose Curve)
+            const angle = Math.random() * Math.PI * 2;
+            const r = 2 * Math.cos(5 * angle);
+            positions[2].push(r * Math.cos(angle), r * Math.sin(angle), (Math.random()-0.5)*0.2);
+
+            // Shape 3: Saturn
+            if(Math.random() > 0.4) { // Planet
+                const v3 = new THREE.Vector3().setFromSphericalCoords(1.2, Math.random() * Math.PI, Math.random() * Math.PI * 2);
+                positions[3].push(v3.x, v3.y, v3.z);
+            } else { // Rings
+                const inner = 1.8, outer = 2.5;
+                const rad = inner + Math.random() * (outer - inner);
+                const ang = Math.random() * Math.PI * 2;
+                positions[3].push(rad * Math.cos(ang), (Math.random()-0.5)*0.1, rad * Math.sin(ang));
+            }
+
+            // Shape 4: Spiral
+            const st = i * 0.01;
+            positions[4].push(Math.cos(st) * (st*0.05), Math.sin(st) * (st*0.05), (i/PARTICLE_COUNT)*2 - 1);
+        }
+
+        Object.keys(positions).forEach(key => {
+            geometry.setAttribute(`pos${key}`, new THREE.Float32BufferAttribute(positions[key], 3));
+        });
+        
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
+
+        // --- MediaPipe Hand Tracking ---
+        const video = document.getElementById('webcam');
+        const hands = new Hands({
+            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+        });
+
+        hands.setOptions({ maxNumHands: 1, modelComplexity: 1, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
+        hands.onResults((results) => {
+            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+                const lm = results.multiHandLandmarks[0];
+                
+                // 1. Expansion via pinch (Thumb 4 to Index 8)
+                const dist = Math.sqrt(Math.pow(lm[4].x - lm[8].x, 2) + Math.pow(lm[4].y - lm[8].y, 2));
+                expansionValue = THREE.MathUtils.lerp(expansionValue, dist * 8.0, 0.1);
+
+                // 2. Color via Wrist position
+                hueValue = lm[0].x;
+
+                // 3. Shape switching via finger count
+                let fingers = 0;
+                if(lm[8].y < lm[6].y) fingers++;  // Index
+                if(lm[12].y < lm[10].y) fingers++; // Middle
+                if(lm[16].y < lm[14].y) fingers++; // Ring
+                if(lm[20].y < lm[18].y) fingers++; // Pinky
+                currentShape = fingers;
+            }
+        });
+
+        // Initialize Camera
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        async function detectionLoop() {
+            await hands.send({ image: video });
+            requestAnimationFrame(detectionLoop);
+        }
+        detectionLoop();
+
+        // --- Render Loop ---
+        function animate() {
+            requestAnimationFrame(animate);
+            material.uniforms.uTime.value += 0.01;
+            material.uniforms.uExpansion.value = expansionValue;
+            material.uniforms.uShape.value = currentShape;
+            material.uniforms.uColor.value.setHSL(hueValue, 0.8, 0.5);
+            
+            points.rotation.y += 0.005;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

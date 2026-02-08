@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COLOR TABLE</title>
+</head>
+<body>
+    <table border="3">
+        <th style="background-color: red;" onmouseout="color('white')" onmouseover="color('red')">RED</th>
+        <th style="background-color: green;" onmouseout="color('white')" onmouseover="color('green')">GREEN</th>
+        <th style="background-color: yellow;" onmouseout="color('white')" onmouseover="color('yellow')">YELLOW</th>
+    </table>
+
+    <script>
+        function color(col){
+            document.querySelector("body").style.background = col;
+        }
+        function color(col){
+             document.querySelector("body").style.background = col;
+        }
+        document.write("Browser Name: " + navigator.appName+"<br>");
+        document.write("Browser Version: " + navigator.appVersion+"<br>");
+        document.write("Cookie Enable: " + navigator.cookieEnabled)+"<br>";
+    </script>
+</body>
+</html>

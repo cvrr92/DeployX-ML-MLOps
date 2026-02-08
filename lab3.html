@@ -1,0 +1,106 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Dynamic Dropdown using Array</title> 
+  <style> 
+    body { 
+      font-family: 'Poppins', sans-serif; 
+      background: linear-gradient(to right, #f8ffae, #43c6ac); 
+      color: #333; 
+      text-align: center; 
+      padding: 40px; 
+    } 
+    h1 { 
+      color: #00695c; 
+      text-shadow: 1px 1px 2px white; 
+    } 
+    select { 
+      padding: 10px; 
+      border-radius: 8px; 
+      border: 2px solid #00695c; 
+      width: 200px; 
+      margin: 10px; 
+      font-size: 16px; 
+    } 
+    label { 
+      font-weight: bold; 
+      color: #004d40; 
+    } 
+    #result { 
+      margin-top: 20px; 
+      font-size: 18px; 
+      color: #2e7d32; 
+      font-weight: bold; 
+    } 
+    .container { 
+      background-color: #ffffffcc; 
+      border-radius: 12px; 
+      padding: 30px; 
+      display: inline-block; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+    } 
+  </style> 
+</head> 
+<body> 
+  <h1>Dynamic Dropdown Demo</h1> 
+  <div class="container"> 
+    <label for="country">Select Country:</label><br> 
+    <select id="country" onchange="loadCities()"> 
+      <option value="">--Select Country--</option> 
+    </select> 
+    <br> 
+    <label for="city">Select City:</label><br> 
+    <select id="city"> 
+      <option value="">--Select City--</option> 
+    </select> 
+    <div id="result"></div> 
+  </div> 
+ 
+  <script> 
+
+    const countryCityData = { 
+      India: ["Delhi", "Mumbai", "Kolkata", "Chennai", "Jaipur"], 
+      USA: ["New York", "Los Angeles", "Chicago", "Houston", "Miami"], 
+      Japan: ["Tokyo", "Osaka", "Kyoto", "Hiroshima"], 
+      Australia: ["Sydney", "Melbourne", "Perth", "Brisbane"], 
+      France: ["Paris", "Lyon", "Marseille", "Nice"] 
+    }; 
+
+    const countrySelect = document.getElementById("country"); 
+    const citySelect = document.getElementById("city"); 
+ 
+    for (let country in countryCityData) { 
+      let option = document.createElement("option"); 
+      option.text = country; 
+      option.value = country; 
+      countrySelect.add(option); 
+    } 
+ 
+
+    function loadCities() { 
+      let selectedCountry = countrySelect.value; 
+      citySelect.innerHTML = '<option value="">--Select City--</option>'; 
+      if (selectedCountry) { 
+        let cities = countryCityData[selectedCountry]; 
+        cities.forEach(city => { 
+          let option = document.createElement("option"); 
+          option.text = city; 
+          option.value = city; 
+          citySelect.add(option); 
+        }); 
+      } 
+ 
+      citySelect.onchange = function() { 
+if (citySelect.value !== "") { 
+document.getElementById("result").innerHTML = 
+`You selected: <b>${citySelect.value}</b> in <b>${selectedCountry}</b>`; 
+} else { 
+document.getElementById("result").innerHTML = ""; 
+} 
+}; 
+} 
+</script> 
+</body> 
+</html>

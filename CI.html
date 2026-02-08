@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compound Interest</title>
+</head>
+<body>
+    <form>
+     <label for="PA">Principle Amount: </label><br>
+     <input type="text" id="PA" placeholder="Enter Principle Amount" required><br><br>
+
+     <label for="ROI">Rate of Interest: </label><br>
+     <input type="text" id="ROI" placeholder="Enter Rate of Interest" required><br><br>
+
+     <label for="time">Time: </label><br>
+     <input type="text" id="time" placeholder="Enter Time" required><br><br>
+
+     <p id="result"></p>
+     </form>
+
+     <button class="btn" onclick="Calculate()">Calculate</button>
+
+     <script>
+        function Calculate(){
+        let p = parseInt(document.getElementById("PA").value);
+
+        let r = parseInt(document.getElementById("ROI").value);
+        }
+
+        let t = parseInt(document.getElementById("time").value);
+
+        let CI = p(1+r/a)
+     </script>
+</body>
+</html>

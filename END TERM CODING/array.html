@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adam No.</title>
+</head>
+<body>
+    Enter a Number: <input type="text" placeholder="Enter A Number Here" id="num"><br><br>
+
+    <button onclick="check()">Check</button>
+
+ 
+
+
+    <script>
+        function reverseNum(n){
+            return Number(String(num).split('').reverse().join(''));
+        }
+        function check(){  
+        let num = Number(document.getElementById("num").value);
+        let square1 = num*num;
+        let reverse = reverseNum(num);
+        let square2 = reverse*reverse;
+        let revsqr = reverseNum(square2);
+        if(square2 === revsqr){
+            alert("Adam Number");
+        }
+        else{
+            alert("Not Adam Number");
+        }
+        }
+    </script>
+</body>
+</html>
+

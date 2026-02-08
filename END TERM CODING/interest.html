@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>END TERM Practice</title>
+</head>
+<body>
+ <center><h1>Simple Interest Calculator</h1></center>
+
+ Enter Principal: <input type="text" placeholder="Enter prinipal amount here" id="PA"><br><br>
+ Enter Rate of Interest: <input type="text" placeholder="Enter Rate of Interest" id="ROI"><br><br>
+ Enter Period: <input type="text" placeholder="Enter time here" id="time"><br><br>
+
+ Interest Amount: <input type="text" placeholder="Interest amount will appear here" id="IA"><br><br>
+
+ Total Amount: <input type="text" placeholder="Total Amount will appear here" id="TA"><br><br>
+
+ <button onclick="calcIA()">Calculate Interest</button>
+ <button onclick="calcTA()">Calculate Total Amount</button>
+    <script>
+        
+        function calcIA(){
+         const Principal = document.getElementById("PA").value;
+         const ROI = document.getElementById("ROI").value;
+         const time = document.getElementById("time").value;
+         let Interest  = document.getElementById("IA");
+         let Total = document.getElementById("TA");
+        
+        if(Principal.trim() == "" && ROI.trim() == "" && time.trim() == ""){
+            alert("Principal, Rate of Interest and time field can't be blank");
+            return false;
+        }
+
+        let SI = (Principal*ROI*time)/100;
+
+        Interest.value = SI;
+     }
+
+     function calcTA(){
+         const Principal = document.getElementById("PA").value;
+         const ROI = document.getElementById("ROI").value;
+         const time = document.getElementById("time").value;
+         let Interest  = document.getElementById("IA");
+         let Total = document.getElementById("TA");
+        
+        if(Principal.trim() == "" && ROI.trim() == "" && time.trim() == ""){
+            alert("Principal, Rate of Interest and time field can't be blank");
+            return false;
+        }
+
+        let SI = (Principal*ROI*time)/100;
+
+        Total.value = SI+Number(Principal);
+     }
+    </script>
+</body>
+</html>

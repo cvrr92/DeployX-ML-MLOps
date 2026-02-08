@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <link rel="stylesheet" href="feedback.css">
+</head>
+
+<body>
+    <h1>Please Fill FeedBack Form Below👇</h1>
+    <form action="">
+        <label for="Q1"><span>1. </span>What did You like most?</label><br><br>
+    
+     <textarea  class="Q1C" placeholder="Enter Here ...."></textarea><br><br><br>
+
+     <label for="Q2"><span>2. </span>What could be improved?</label><br><br>
+     <textarea class="Q1C" placeholder="Enter Here ...."></textarea><br><br><br>
+
+     <label for="Q3"><span>3. </span>Any suggestions or ideas?</label><br><br>
+     <textarea class="Q1C" placeholder="Enter Here ...."></textarea>
+    
+     <button>Submit</button>
+    </form>
+    <script>
+document.querySelector("form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Get textarea values
+    const feedback1 = document.querySelectorAll(".Q1C")[0].value.trim();
+    const feedback2 = document.querySelectorAll(".Q1C")[1].value.trim();
+    const feedback3 = document.querySelectorAll(".Q1C")[2].value.trim();
+
+    // Optional: Validate inputs
+    if (!feedback1 || !feedback2 || !feedback3) {
+        alert("Please fill out all fields before submitting.");
+        return;
+    }
+
+    // Simulate submission (you can replace this with actual server call)
+    console.log("Feedback Submitted:");
+    console.log("Liked Most:", feedback1);
+    console.log("Improvement:", feedback2);
+    console.log("Suggestions:", feedback3);
+
+    // Optional: Show confirmation
+    alert("Thank you for your feedback!");
+
+    // Reset form
+    event.target.reset();
+});
+</script>
+</body>
+
+</html>

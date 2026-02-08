@@ -1,0 +1,112 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designing Form</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <h1>Enter Your Details Here</h1>
+    <form action="" id="form">
+        <label for="name">Name: </label>
+        <input type="text" id="name" class="name" placeholder="Enter Your Name..." required><br><br>
+
+        <label for="gmail">Gmail: </label>
+        <input type="text" id="gmail" class="gmail" placeholder="Enter Your Gmail.." required><br><br>
+
+        <label for="DOB">Date of Birth: </label>
+        <input type="date" id="DOB" class="DOB" required><br><br>
+
+        <label for="mobile">Mobile No: </label>
+        <input type="tel" id="mobile" class="mobile" placeholder="Enter Your Mobile Numbe.." minlength="10" maxlength="12" required><br><br>
+
+       <button>Submit</button>
+    </form>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form - Using Media in CSS</title>
+
+    <style>
+        body{
+            background-image: url(/bg10.jpg);
+        }
+        form {
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 20px;
+            background: grey;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgb(169, 50, 50);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            filter: blur(0.2px);
+        }
+
+        label {
+            display: block;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+        }
+
+        input {
+            width: 98%;
+            height: 50px;
+            border-radius: 7px;
+            box-shadow: 2 2 10 red;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* padding: 5px; */
+            margin: 5px;
+        }
+
+        h1{
+          text-align: center;
+          font-weight: 500;
+          font-size: 50px;
+          font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        @media(max-width: 700px) {
+            
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>FORM</h1>
+    <form action="f.php">
+        <label for="name">Name: </label>
+        <input type="text" name="name" id="name" placeholder="Enter Your Name" required><br><br><br>
+
+        <label for="class">Course: </label>
+        <input type="text" name="class" id="class" placeholder="Enter Your Course" required><br><br><br>
+
+        <label for="sec">Sec: </label>
+        <input type="text" class="sec" id="sec" placeholder="Enter Your Section" required><br><br><br>
+
+        <label for="DOB">Date of Birth: </label>
+        <input type="date" name="DOB" id="DOB" required><br><br><br>
+
+        <label for="phone">Mobile No: </label>
+        <input type="tel" name="phone" id="phone" minlength="10" maxlength="12" placeholder="Enter Your Mobile Number"
+            required><br><br><br>
+
+        <label for="email">E-Mail: </label>
+        <input type="email" name="email" id="email" placeholder="Enter Your E-Mail" required><br><br><br>
+
+        <input type="Submit" value="Submit">
+
+    </form>
+</body>
+
+</html>

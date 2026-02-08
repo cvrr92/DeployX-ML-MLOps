@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Learning</title>
+</head>
+<body>
+    <label for="name">Name: </label>
+    <input type="text" id="textbox" placeholder="Enter a Text">
+    <p id="result"></p>
+    <p id="reverse"></p>
+    <button onclick="count()">Count and Reverse</button>
+    <script>
+        function count(){
+            alert("Counting...");
+         var text = document.getElementById("textbox").value;
+        
+        var wordcount = text.length;
+        document.getElementById("result").innerText = "Total Characters are " + wordcount;
+
+        var reverse = text.split("").reverse().join("");
+
+        document.getElementById("reverse").innerText = "Reverse is => "+reverse;
+        
+    }
+    alert(navigator.appName);
+
+    console.log(2+3);
+    
+
+    </script>
+</body>
+</html>
+
+
+<!-- 20 Common Method of JavaScript -->

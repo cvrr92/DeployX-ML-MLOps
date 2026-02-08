@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluate Function</title>
+</head>
+<body>
+    <button onclick="promp()">Prompt Box</button>
+    <script>
+        function promp(){
+            let box = prompt("Enter a Evaluation:");
+
+            try{
+                alert("Result: " + eval(box));
+            }
+            catch{
+                alert("Enter valid Evaluation");
+            }
+        }
+    </script>
+</body>
+</html>

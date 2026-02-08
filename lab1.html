@@ -1,0 +1,163 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+  <title>JavaScript Array Operations</title> 
+  <style> 
+    body { 
+      font-family: 'Poppins', sans-serif; 
+      background: linear-gradient(to right, #89f7fe, #66a6ff); 
+      text-align: center; 
+      padding: 40px; 
+      color: #333; 
+    } 
+    h1 { 
+      color: #0d47a1; 
+      text-shadow: 1px 1px 2px white; 
+    } 
+    #arrayDisplay { 
+      background-color: #ffffff; 
+      border-radius: 12px; 
+      padding: 20px; 
+      width: 70%; 
+      margin: 20px auto; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+    } 
+    button { 
+      background-color: #1565c0; 
+      color: white; 
+      border: none; 
+      padding: 10px 20px; 
+      border-radius: 8px; 
+      margin: 5px; 
+      cursor: pointer; 
+      font-weight: bold; 
+      transition: 0.3s; 
+    } 
+    button:hover { 
+      background-color: #1976d2; 
+      transform: scale(1.05); 
+    } 
+    input { 
+      padding: 8px; 
+      border-radius: 5px; 
+      border: 2px solid #1565c0; 
+      width: 200px; 
+      margin: 5px; 
+    } 
+    .section-title { 
+      color: #0d47a1; 
+margin-top: 30px; 
+font-size: 20px; 
+text-decoration: underline; 
+} 
+</style> 
+</head> 
+<body> 
+<h1>JavaScript Array Methods Demo</h1> 
+<div id="arrayDisplay"></div> 
+<div> 
+<input type="text" id="newItem" placeholder="Enter new fruit"> 
+<button onclick="addItem()">Push (Add)</button> 
+<button onclick="removeLast()">Pop (Remove Last)</button> 
+<button onclick="removeFirst()">Shift (Remove First)</button> 
+<button onclick="addFirst()">Unshift (Add First)</button> 
+</div> 
+<div> 
+<button onclick="sortArray()">Sort</button> 
+<button onclick="reverseArray()">Reverse</button> 
+</div> 
+<div> 
+<h3 class="section-title">Advanced Methods</h3> 
+    <input type="number" id="startIndex" placeholder="Start Index"> 
+    <input type="number" id="deleteCount" placeholder="Delete Count"> 
+    <input type="text" id="insertItem" placeholder="Insert Value"> 
+    <button onclick="spliceArray()">Splice</button> 
+    <br> 
+    <input type="number" id="sliceStart" placeholder="Slice Start"> 
+    <input type="number" id="sliceEnd" placeholder="Slice End"> 
+    <button onclick="sliceArray()">Slice</button> 
+  </div> 
+ 
+  <script> 
+    let fruits = ["Apple", "Banana", "Mango", "Orange", "Pineapple"]; 
+ 
+    function displayArray(message = "Current Array:") { 
+      document.getElementById("arrayDisplay").innerHTML = 
+        `<h3>${message}</h3><p>${fruits.join(", ")}</p>`; 
+    } 
+ 
+    function addItem() { 
+      let item = document.getElementById("newItem").value.trim(); 
+      if (item) { 
+        fruits.push(item); 
+        displayArray(`Added "${item}" using push()`); 
+        document.getElementById("newItem").value = ""; 
+      } else { 
+        alert("Enter a fruit name first!"); 
+      } 
+    } 
+ 
+    function removeLast() { 
+      let removed = fruits.pop(); 
+      displayArray(`Removed "${removed}" using pop()`); 
+    } 
+ 
+    function removeFirst() { 
+      let removed = fruits.shift(); 
+      displayArray(`Removed first element "${removed}" using shift()`); 
+    } 
+ 
+    function addFirst() { 
+      let item = document.getElementById("newItem").value.trim(); 
+      if (item) { 
+        fruits.unshift(item); 
+        displayArray(`Added "${item}" at beginning using unshift()`); 
+        document.getElementById("newItem").value = ""; 
+      } else { 
+        alert("Enter a fruit name first!"); 
+      } 
+    } 
+ 
+    function sortArray() { 
+      fruits.sort(); 
+      displayArray("Array sorted alphabetically using sort()"); 
+    } 
+ 
+    function reverseArray() { 
+      fruits.reverse(); 
+      displayArray("Array reversed using reverse()"); 
+    } 
+ 
+    function spliceArray() { 
+      let start = parseInt(document.getElementById("startIndex").value); 
+      let del = parseInt(document.getElementById("deleteCount").value); 
+      let val = document.getElementById("insertItem").value.trim(); 
+ 
+      if (isNaN(start)) { 
+        alert("Please enter a valid start index!"); 
+        return; 
+      } 
+ 
+      if (isNaN(del)) del = 0; 
+ 
+      if (val) { 
+        fruits.splice(start, del, val); 
+        displayArray(`Used splice() to insert "${val}" at index ${start}`); 
+      } else { 
+        fruits.splice(start, del); 
+        displayArray(`Used splice() to remove ${del} item(s) from index ${start}`); 
+      } 
+    } 
+ 
+    function sliceArray() { 
+      let start = parseInt(document.getElementById("sliceStart").value); 
+      let end = parseInt(document.getElementById("sliceEnd").value); 
+      let sliced = fruits.slice(start, end); 
+      alert(`Sliced part: ${sliced.join(", ")}`); 
+      displayArray("Displayed sliced portion using slice()"); 
+    } 
+ 
+    displayArray("Initial Array:"); 
+  </script> 
+</body> 
+</html> 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPTCHA</title>
+</head>
+
+<body>
+    <center>
+        <h1>SIMPLE CAPTCHA</h1>
+    </center>
+
+    <p id="captcha"></p><br>
+    Enter CAPTCHA: <input type="text" id="user"><br>
+    <p id="result"></p><br><br>
+    <button onclick="check()">Check</button>
+    <button onclick="refresh()">Refresh</button>
+
+    <script>
+        function generate() {
+            return Math.floor(1000 + Math.random() * 1000).toString();
+        }
+
+        let captcha = generate();
+        document.getElementById("captcha").innerText = "CAPTCHA: " + captcha;
+        function refresh() {
+            captcha = generate();
+            document.getElementById("captcha").innerText = "CAPTCHA: " + captcha;
+            document.getElementById("result").innerText = "";
+            document.getElementById("user").value = "";
+        }
+
+        function check() {
+            let user = document.getElementById("user").value;
+            if (user === captcha) {
+                document.getElementById("result").innerText = "Matched!";
+            }
+            else {
+                document.getElementById("result").innerText = "Not Matched!!"
+                captcha = generate();
+                document.getElementById("captcha").innerText = "CAPTCHA: " + captcha;
+            }
+        }
+    </script>
+</body>
+
+</html>

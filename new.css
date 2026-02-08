@@ -1,0 +1,25 @@
+body{
+    background: #00ff00;
+
+}
+
+h1{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: x-large;
+    text-align: center;
+}
+
+.heading{
+    font-family: 'Courier New', Courier, monospace;
+    font-style: italic;
+}
+
+#testing{
+    background: yellow;
+    height: 300px;
+    width: 400px;
+}
+
+div a :hover{
+ color: yellow;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome or Not</title>
+</head>
+<body>
+    <label for="Num">Enter a Number: </label><br>
+    <input type="text" id="Num" placeholder="Enter A Number"><br><br>
+    <p id="result"></p><br>
+    <button class="btn" onclick="Check()">Check</button>
+
+    <script>
+        function Check(){
+
+            alert("Checking....");
+            let rev=0;
+        let num = parseInt(document.getElementById("Num").value);
+        let org = num;
+        while(num!=0){
+           let rem = num%10;
+            rev = rev*10+rem;
+            num = num/10;
+        }
+
+        if(rev===org){
+            document.getElementById("result").innerHTML="Result: Palindrome";
+        }
+
+        else{
+            document.getElementById("result").innerHTML="Result: Not Palindrome";
+        }
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Interest</title>
+    <!-- <style>
+        body{
+            
+        }
+      form{
+        display: flex;
+        gap: 10px;
+        
+      }
+      .btn{
+       margin-top: 10px;
+       
+      }
+    </style> -->
+</head>
+<body>
+    <form>
+     <label for="PA">Principle Amount: </label><br>
+     <input type="text" id="PA" placeholder="Enter Principle Amount" required><br><br>
+
+     <label for="ROI">Rate of Interest: </label><br>
+     <input type="text" id="ROI" placeholder="Enter Rate of Interest" required><br><br>
+
+     <label for="time">Time: </label><br>
+     <input type="text" id="time" placeholder="Enter Time" required><br><br>
+
+     <p id="result"></p>
+     </form>
+
+     <button class="btn" onclick="Calculate()">Calculate</button>
+     
+
+     <script>
+        function Calculate(){
+
+            alert("Calculating Interest.");
+        let x = parseInt(document.getElementById("PA").value);
+        let y = parseInt(document.getElementById("ROI").value);
+        let z = parseInt(document.getElementById("time").value);
+        let SI = (x*y*z)/100;
+        let payable = (x*y*z)/100+x;
+
+        document.getElementById("result").innerHTML="Total Simple Interest: "+SI+"<br>"+ "Total Payable Amount: "+payable;
+        
+    //    result = document.write((x*y*z)/100);
+        }
+     </script>
+
+     
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webpage For Temprature Convertion</title>
+</head>
+
+<body>
+    <h1>Designing a webpage for Temprature Convertion</h1>
+
+    <label for="Temprature">Temprature: </label>
+    <input type="number" id="Temprature" placeholder="Enter Temprature Here"><br><br>
+
+    <label for="Coverter">Select Convertion Type: </label>
+     <select name="Converter" id="Converter">
+            <option value="">Select Covertion Type</option>
+            <option value="1">Fahrenhiet to Celcius</option>
+            <option value="2">Celcius to Fahrenhie</option>
+        </select><br><br>   
+
+        <!-- Result: <input type="number" id="Result"><br><br> -->
+         <p id="Result"></p>
+
+        <button onclick="calculate()">Calculate</button>
+
+        <script>
+            function calculate(){
+                alert("Calculating....");
+                let temp = parseInt(document.getElementById("Temprature").value);
+                let select = parseInt(document.getElementById("Converter").value);
+                let result = document.getElementById("Result");
+                if(select===1){
+                    let Celcius = (temp-32)*5/9;
+                   result.innerHTML = "Result is: " + Celcius + "°C";
+                }
+                else{
+                    let Fahrenhiet = (temp*9/5)+32;
+                     result.innerHTML ="Result is: " + Fahrenhiet + "°F";
+                }
+                
+            }
+        </script>
+</body>
+
+</html>
